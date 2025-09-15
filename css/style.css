@@ -1100,5 +1100,23 @@ contact .contact-form .btn
   .home .home-img img {
     height: 18rem;
     padding-top: 20px;
+    
 }
  }
+@media (max-width: 477px) {
+  h3.my-profession {
+    font-size: 22px;
+  }
+}
+
+@media (max-width: 399px) {
+  h3.my-profession {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 369px) {
+  h3.my-profession {
+    font-size: 15px;
+  }
+}
