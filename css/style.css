@@ -1100,6 +1100,7 @@ contact .contact-form .btn
   .home .home-img img {
     height: 18rem;
     padding-top: 20px;
+    
 }
  }
 @media (max-width: 477px) {
@@ -1119,4 +1120,3 @@ contact .contact-form .btn
     font-size: 15px;
   }
 }
-
