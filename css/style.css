@@ -1101,4 +1101,14 @@ contact .contact-form .btn
     height: 18rem;
     padding-top: 20px;
 }
+   h3.my-profession{
+     font-size:16px;
  }
+@media(max-width:399px){
+  h3.my-profession{
+    font-size:22px;}
+}
+@media(max-width:459px){
+  h3.my-profession{
+    font-size:25px;}
+}
