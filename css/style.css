@@ -768,6 +768,77 @@ position: relative;
 
   
 } 
+/* Container relative */
+.portfolio .portfolio-item-inner .portfolio-img {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Image animation */
+.portfolio .portfolio-item-inner .portfolio-img img {
+  transition: transform 0.6s ease, filter 0.6s ease;
+  display: block;
+  object-fit: cover;
+}
+
+.portfolio .portfolio-item-inner:hover .portfolio-img img {
+  transform: scale(1.1);
+  filter: brightness(0.7);
+}
+
+/* Overlay icons container */
+.portfolio .portfolio-item-inner .portfolio-img .overlay-icons {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  display: flex;
+  gap: 15px;
+  transition: transform 0.4s ease;
+}
+
+.portfolio .portfolio-item-inner:hover .portfolio-img .overlay-icons {
+  transform: translate(-50%, -50%) scale(1);
+}
+
+/* Icon style */
+.portfolio .portfolio-item-inner .portfolio-img .overlay-icons a {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  background: rgba(0,0,0,0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 20px;
+  text-decoration: none;
+  transition: background 0.3s ease;
+}
+
+.portfolio .portfolio-item-inner .portfolio-img .overlay-icons a:hover {
+  background: rgb(68, 52, 238);
+}
+/* Overlay text box */
+.portfolio .portfolio-item-inner .portfolio-img .overlay-text {
+  position: absolute;
+  bottom: 15px;   /* thoda upar uthakar */
+  left: 50%;
+  transform: translateX(-50%) translateY(50%);
+  color: #fff;
+  font-size: 18px;
+  font-weight: 500;
+  opacity: 0;
+  transition: all 0.4s ease;
+  text-shadow: 0 2px 5px rgba(0,0,0,0.7); /* dark bg pe visible banane ke liye */
+}
+
+/* Show text on hover */
+.portfolio .portfolio-item-inner:hover .overlay-text {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+}
+
 /* .web-navigation{
       display: inline-flex
 ;
