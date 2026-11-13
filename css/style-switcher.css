@@ -33,6 +33,15 @@
     border-radius:50%;
 
 }
+.style-switcher button.s-icon {
+    appearance:none;
+    padding:0;
+    cursor:pointer;
+    font:inherit;
+}
+.style-switcher button.s-icon:hover {
+    color:var(--skin-color);
+}
 .style-switcher .s-icon i{
     line-height:40px;
 }
@@ -57,13 +66,19 @@
     flex-wrap: wrap;
     justify-content: space-between;
 }
-.style-switcher .color span{
+.style-switcher .color button{
+    appearance:none;
     display:inline-block;
     height:30px;
     width:30px;
     border-radius: 50%;
     border:1px solid red;
-    
+    padding:0;
+    cursor:pointer;
+}
+.style-switcher .color button[aria-pressed="true"] {
+    outline:2px solid var(--text-black-900);
+    outline-offset:2px;
 
 }
 .style-switcher .color-1

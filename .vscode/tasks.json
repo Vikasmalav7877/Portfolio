@@ -3,15 +3,9 @@
     "tasks": [
         {
             "label": "Start Portfolio Server",
-            "type": "process",
-            "command": "python",
-            "args": [
-                "-m",
-                "http.server",
-                "8080",
-                "--bind",
-                "127.0.0.1"
-            ],
+            "type": "shell",
+            "command": "npm",
+            "args": ["run", "dev"],
             "options": {
                 "cwd": "${workspaceFolder}"
             },
@@ -23,8 +17,8 @@
                 },
                 "background": {
                     "activeOnStart": true,
-                    "beginsPattern": "^Serving HTTP on",
-                    "endsPattern": "^Serving HTTP on .* port 8080"
+                    "beginsPattern": "VITE v",
+                    "endsPattern": "http://127\.0\.0\.1:8080/"
                 }
             },
             "presentation": {
