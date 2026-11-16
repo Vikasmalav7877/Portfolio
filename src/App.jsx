@@ -1,4 +1,11 @@
 import React, { useEffect, useState } from 'react';
+import color1 from '../css/skins/color-1.css?url';
+import color2 from '../css/skins/color-2.css?url';
+import color3 from '../css/skins/color-3.css?url';
+import color4 from '../css/skins/color-4.css?url';
+import color5 from '../css/skins/color-5.css?url';
+
+const asset = (path) => `${import.meta.env.BASE_URL}${path}`;
 
 const navigation = [
   { id: 'home', label: 'Home', icon: 'fa fa-home' },
@@ -54,9 +61,9 @@ const qualifications = [
 ];
 
 const experienceImages = [
-  { src: '/image/we connect.jpg', alt: 'We Connect experience certificate' },
-  { src: '/image/cyber security.jpg', alt: 'Cyber security experience certificate' },
-  { src: '/image/Screenshot 2025-09-14 040739.png', alt: 'Experience certificate' },
+  { src: asset('image/we connect.jpg'), alt: 'We Connect experience certificate' },
+  { src: asset('image/cyber security.jpg'), alt: 'Cyber security experience certificate' },
+  { src: asset('image/Screenshot 2025-09-14 040739.png'), alt: 'Experience certificate' },
 ];
 
 const services = [
@@ -94,23 +101,23 @@ const services = [
 
 const projects = [
   {
-    image: '/image/uk2india.co.uk_index (1).png',
+    image: asset('image/uk2india.co.uk_index (1).png'),
     title: 'UK2India Travel Website',
     url: 'https://uk2india.co.uk',
   },
   {
-    image: '/image/Screenshot 2025-09-25 151351.png',
+    image: asset('image/Screenshot 2025-09-25 151351.png'),
     title: 'Hospital Management Site',
     url: 'https://vikasmalav7877.github.io/hospital-managment/',
   },
   {
-    image: '/image/Screenshot 2025-10-18 215953.png',
+    image: asset('image/Screenshot 2025-10-18 215953.png'),
     title: 'Candles',
     url: 'https://vikasmalav7877.github.io/candle/',
   },
-  { image: '/image/wordpress.png', title: 'WordPress' },
-  { image: '/image/css-calculator.png', title: 'CSS Calculator' },
-  { image: '/image/adult-analysis-banking-1549000-2-1130x688.webp', title: 'Dashboard Project' },
+  { image: asset('image/wordpress.png'), title: 'WordPress' },
+  { image: asset('image/css-calculator.png'), title: 'CSS Calculator' },
+  { image: asset('image/adult-analysis-banking-1549000-2-1130x688.webp'), title: 'Dashboard Project' },
 ];
 
 const contactMethods = [
@@ -143,6 +150,7 @@ const contactMethods = [
 ];
 
 const skins = ['color-1', 'color-2', 'color-3', 'color-4', 'color-5'];
+const skinUrls = [color1, color2, color3, color4, color5];
 const roles = ['Web Designer', 'Web Developer'];
 
 function SectionTitle({ children }) {
@@ -223,7 +231,7 @@ function Home() {
             <a href="#about" className="btn hire-me">More about me</a>
           </div>
           <div className="home-img padd-15">
-            <img src="/image/resume image.jpg" alt="Vikas Malav" />
+            <img src={asset('image/resume image.jpg')} alt="Vikas Malav" />
           </div>
         </div>
       </div>
@@ -262,7 +270,7 @@ function About() {
                     </div>
                   ))}
                   <div className="buttons padd-15">
-                    <a href="/CV/Resume.pdf" download="Vikas_Malav_CV.pdf" className="btn">Download CV</a>
+                    <a href={asset('CV/Vikas_Malav_Resume_Spacing_Fixed.pdf')} download="Vikas_Malav_Resume_Spacing_Fixed.pdf" className="btn">Download CV</a>
                     <a href="#contact" className="btn">Contact Me</a>
                   </div>
                 </div>
@@ -369,12 +377,40 @@ function Portfolio() {
 }
 
 function Contact() {
-  const handleSubmit = (event) => {
+  const [submissionStatus, setSubmissionStatus] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    const subject = encodeURIComponent(data.get('subject') || 'Portfolio enquiry');
-    const body = encodeURIComponent(`Name: ${data.get('name')}\nEmail: ${data.get('email')}\n\n${data.get('message')}`);
-    window.location.href = `mailto:Malavvikas001@gmail.com?subject=${subject}&body=${body}`;
+    const form = event.currentTarget;
+    const endpoint = import.meta.env.VITE_FORMSPREE_ENDPOINT;
+
+    if (!endpoint) {
+      setSubmissionStatus('The contact form is not configured yet. Add your Formspree endpoint to .env.local.');
+      return;
+    }
+
+    setIsSubmitting(true);
+    setSubmissionStatus('');
+
+    try {
+      const response = await fetch(endpoint, {
+        method: 'POST',
+        headers: { Accept: 'application/json' },
+        body: new FormData(form),
+      });
+
+      if (!response.ok) {
+        throw new Error('Your message could not be sent. Please try again later.');
+      }
+
+      form.reset();
+      setSubmissionStatus('Message sent successfully. Thank you for getting in touch!');
+    } catch (error) {
+      setSubmissionStatus(error instanceof Error ? error.message : 'Your message could not be sent. Please try again later.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -399,14 +435,15 @@ function Contact() {
       <h4 className="contact-sub-title padd-15">Tell me a little about what you have in mind.</h4>
       <div className="row">
         <div className="contact-form padd-15">
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit} onChange={() => setSubmissionStatus('')}>
             <div className="row">
               <div className="form-item col-6 padd-15"><input className="form-control" type="text" name="name" placeholder="Your name" aria-label="Your name" autoComplete="name" required /></div>
               <div className="form-item col-6 padd-15"><input className="form-control" type="email" name="email" placeholder="Email address" aria-label="Email address" autoComplete="email" required /></div>
             </div>
             <div className="row"><div className="form-item col-12 padd-15"><input className="form-control" type="text" name="subject" placeholder="Subject" aria-label="Subject" required /></div></div>
             <div className="row"><div className="form-item col-12 padd-15"><textarea className="form-control" name="message" placeholder="Your message" aria-label="Your message" required /></div></div>
-            <div className="row"><div className="form-item col-12 padd-15"><button type="submit" className="btn">Send message</button></div></div>
+            <div className="row"><div className="form-item col-12 padd-15"><button type="submit" className="btn" disabled={isSubmitting}>{isSubmitting ? 'Sending...' : 'Send message'}</button></div></div>
+            {submissionStatus && <p role="status" aria-live="polite">{submissionStatus}</p>}
           </form>
         </div>
       </div>
@@ -464,8 +501,11 @@ export default function App() {
   }, [dark]);
 
   useEffect(() => {
-    const stylesheet = document.getElementById('active-skin');
-    if (stylesheet) stylesheet.href = `/css/skins/${skin}.css`;
+    const stylesheet = document.createElement('link');
+    stylesheet.rel = 'stylesheet';
+    stylesheet.href = skinUrls[skins.indexOf(skin)];
+    document.head.appendChild(stylesheet);
+    return () => stylesheet.remove();
   }, [skin]);
 
   useEffect(() => {
